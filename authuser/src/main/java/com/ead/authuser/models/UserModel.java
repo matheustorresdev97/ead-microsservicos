@@ -8,6 +8,7 @@ import com.ead.authuser.enums.UserStatus;
 import com.ead.authuser.enums.UserType;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -17,7 +18,10 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.Data;
 
+@Data
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @Entity
 @Table(name = "users")
 public class UserModel implements Serializable {
