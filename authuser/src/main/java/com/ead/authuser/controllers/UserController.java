@@ -22,9 +22,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
 import com.ead.authuser.dtos.UserDto;
 import com.ead.authuser.models.UserModel;
 import com.ead.authuser.services.UserService;
+import com.ead.authuser.specifications.SpecificationTemplate;
 import com.fasterxml.jackson.annotation.JsonView;
 
 @RestController
@@ -36,9 +40,14 @@ public class UserController {
     UserService userService;
 
     @GetMapping
-    public ResponseEntity<Page<UserModel>> getAllUsers(
+    public ResponseEntity<Page<UserModel>> getAllUsers(SpecificationTemplate.UserSpec spec,
             @PageableDefault(page = 0, size = 10, sort = "userId", direction = Sort.Direction.ASC) Pageable pageable) {
-        Page<UserModel> userPage = userService.findAll(pageable);
+                Page<UserModel> userPage = userService.findAll(spec, pageable);
+                if (!userPage.isEmpty()) {
+                    for (UserModel user : userPage.toList()) {
+                        user.add(linkTo(methodOn(UserController.class).getUserById(user.getUserId())).withSelfRel());
+                    }
+                }
         return ResponseEntity.status(HttpStatus.OK).body(userPage);
     }
 
