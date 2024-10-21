@@ -1,0 +1,81 @@
+### SING UP
+
+POST http://localhost:8087/auth/signup
+Content-Type: application/json
+
+{
+    "username": "matheustorres",
+    "email": "matheustorres@email.com",
+    "password": "123456",
+    "fullName": "Matheus Torres",
+    "phoneNumber": "11999558844",
+    "cpf": "105984569895"
+}
+
+### LOGIN
+POST http://localhost:8087/auth/login
+Content-Type: application/json
+
+{
+    "username": "matheustorres",
+    "password": "123456"
+}
+
+
+### GET ALL USERS
+GET http://localhost:8087/users
+
+
+### GET USER BY ID
+GET http://localhost:8087/users/bafdc5e8-aed3-4e6e-9901-9f1d2fcd8ba4
+
+### GET All Users com Paginação e Filtros
+### 1. Buscar todos os usuários sem filtros (apenas paginação)
+GET http://localhost:8087/users?page=0&size=10&sort=userId,asc
+
+### 2. Buscar usuários com filtro de userType
+GET http://localhost:8087/users?userType=STUDENT&page=0&size=10&sort=userId,asc
+
+### 3. Buscar usuários com filtro de userStatus
+GET http://localhost:8087/users?userStatus=ACTIVE&page=0&size=10&sort=userId,asc
+
+### 4. Buscar usuários com filtro de email (LIKE)
+GET http://localhost:8087/users?email=matheustorres@email.com&page=0&size=10&sort=userId,asc
+
+### 5. Buscar usuários com múltiplos filtros (userType, userStatus, email)
+GET http://localhost:8087/users?userType=STUDENT&userStatus=ACTIVE&email=matheustorres@email.com&page=0&size=10&sort=userId,asc
+
+
+### DELETE USER
+DELETE http://localhost:8087/users/{id}
+
+### UPDATE USER
+PUT http://localhost:8087/users/bafdc5e8-aed3-4e6e-9901-9f1d2fcd8ba4
+Content-Type: application/json
+
+{
+    "fullName": "Novo Nome Completo",
+    "phoneNumber": "123456789",
+    "cpf": "12345678900"
+}
+
+
+
+### PUT PASSWORD
+
+PUT http://localhost:8087/users/bafdc5e8-aed3-4e6e-9901-9f1d2fcd8ba4/password
+Content-Type: application/json
+
+{
+    "password": "246813579",
+    "oldPassword": "123456"
+}
+
+### PUT IMAGE
+
+PUT http://localhost:8087/users/bafdc5e8-aed3-4e6e-9901-9f1d2fcd8ba4/image
+Content-Type: application/json
+
+{
+    "imageUrl": "teste-image-validated"
+}
