@@ -2,12 +2,15 @@ package com.ead.course.controllers;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -24,6 +27,7 @@ import com.ead.course.models.CourseModel;
 import com.ead.course.models.ModuleModel;
 import com.ead.course.services.CourseService;
 import com.ead.course.services.ModuleService;
+import com.ead.course.specifications.SpecificationTemplate;
 
 import jakarta.validation.Valid;
 
@@ -37,7 +41,7 @@ public class ModuleController {
     @Autowired
     CourseService courseService;
 
-     @PostMapping("/courses/{courseId}/modules")
+    @PostMapping("/courses/{courseId}/modules")
     public ResponseEntity<Object> saveModule(@PathVariable(value = "courseId") UUID courseId,
             @RequestBody @Valid ModuleDto moduleDto) {
         Optional<CourseModel> courseModelOptional = courseService.findById(courseId);
@@ -77,8 +81,11 @@ public class ModuleController {
     }
 
     @GetMapping("/courses/{courseId}/modules")
-    public ResponseEntity<List<ModuleModel>> getAllModules(@PathVariable(value = "courseId") UUID courseId) {
-        return ResponseEntity.status(HttpStatus.OK).body(moduleService.findAllByCourse(courseId));
+    public ResponseEntity<Page<ModuleModel>> getAllModules(@PathVariable(value = "courseId") UUID courseId,
+            SpecificationTemplate.ModuleSpec spec,
+            @PageableDefault(page = 0, size = 10, sort = "moduleId", direction = Sort.Direction.ASC) Pageable pageable) {
+        return ResponseEntity.status(HttpStatus.OK).body(
+                moduleService.findAllByCourse(SpecificationTemplate.moduleCourseId(courseId).and(spec), pageable));
     }
 
     @GetMapping("/courses/{courseId}/modules/{moduleId}")
@@ -90,6 +97,5 @@ public class ModuleController {
         }
         return ResponseEntity.status(HttpStatus.OK).body(moduleModelOptional.get());
     }
-
 
 }

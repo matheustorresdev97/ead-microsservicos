@@ -5,11 +5,14 @@ import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import com.ead.course.models.LessonModel;
 import com.ead.course.repositories.LessonRepository;
 import com.ead.course.services.LessonService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 @Service
 public class LessonServiceImpl implements LessonService {
@@ -27,12 +30,17 @@ public class LessonServiceImpl implements LessonService {
     }
 
     @Override
-    public void delete(LessonModel lesson) {
-        lessonRepository.delete(lesson);
+    public void delete(LessonModel lessonModel) {
+        lessonRepository.delete(lessonModel);
     }
 
     @Override
     public List<LessonModel> findAllByModule(UUID moduleId) {
         return lessonRepository.findAllLessonsIntoModule(moduleId);
+    }
+
+    @Override
+    public Page<LessonModel> findAllByModule(Specification<LessonModel> spec, Pageable pageable) {
+        return lessonRepository.findAll(spec, pageable);
     }
 }
