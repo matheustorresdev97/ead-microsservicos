@@ -1,0 +1,85 @@
+### GET ALL COURSES
+GET http://localhost:8082/courses
+
+### GET ONE COURSE
+GET http://localhost:8082/courses/7cb840e1-d683-4762-8cfe-1bd022f07c38
+
+### POST COURSE
+POST http://localhost:8082/courses
+Content-Type: application/json
+
+{
+    "name": "Curso Spring Security",
+    "description": "Crie Autenticação com Spring Security em Microservices",
+    "userInstructor": "ed235441-89e3-4de5-87af-0cfb2ac8a9d8",
+    "courseStatus": "CONCLUDED",
+    "courseLevel": "BEGINNER"
+}
+
+### DELETE COURSE
+DELETE http://localhost:8082/courses/7cb840e1-d683-4762-8cfe-1bd022f07c38
+
+### UPDATE COURSE
+PUT http://localhost:8082/courses/7cb840e1-d683-4762-8cfe-1bd022f07c38
+Content-Type: application/json
+
+{
+    "name": "Curso Spring Security 2.0",
+    "description": "Crie Autenticação com Spring Security em Microservices",
+    "userInstructor": "ed235441-89e3-4de5-87af-0cfb2ac8a9d8",
+    "courseStatus": "CONCLUDED",
+    "courseLevel": "BEGINNER"
+}
+
+### POST MODULE
+POST http://localhost:8082/courses/7cb840e1-d683-4762-8cfe-1bd022f07c38/modules
+Content-Type: application/json
+
+{
+    "title": "Modulo 1",
+    "description": "Inserindo Spring Security e Configurando Projeto"
+}
+
+### GET ALL MODULES
+GET http://localhost:8082/courses/132bf444-584f-4e4e-a49d-8c831f74d360/modules
+
+### GET ONE MODULE
+GET http://localhost:8082/ead-courses/courses/8/modules/57
+
+### DELETE MODULE
+DELETE http://localhost:8082/courses/7cb840e1-d683-4762-8cfe-1bd022f07c38/modules/132bf444-584f-4e4e-a49d-8c831f74d360
+
+### PUT MODULE
+PUT http://localhost:8082/courses/7cb840e1-d683-4762-8cfe-1bd022f07c38/modules/132bf444-584f-4e4e-a49d-8c831f74d360
+Content-Type: application/json
+
+{
+    "description": "Inserindo Spring Security e Configurando Projeto - Atualizado"
+}
+
+### GET ALL LESSONS
+GET http://localhost:8082/modules/7597ae07-dc5f-4e96-b4ae-ac5bf0a10205/lessons?sort=creationDate,DESC&title=Aula%202
+
+### POST LESSON
+POST http://localhost:8082/modules/0ac8a00e-4615-4ca1-b110-277d6d266ce0/lessons
+Content-Type: application/json
+
+{
+    "title": "Aula 1 - Inserindo dependência.",
+    "description": "Inserindo depêndencia do arquivo pom.xml",
+    "videoUrl": "https://www.youtube.com/watch?v=LW-N44fZ1wk"
+}
+
+### GET ONE LESSON
+GET http://localhost:8082/ead-courses/modules/57/lessons/66
+
+### DELETE LESSON
+DELETE http://localhost:8082/modules/be50d503-9ba7-4733-af5c-5e47bbe482de/lessons/0cb0b06c-2492-4a0c-a06a-16aadcc5c163
+
+### PUT LESSON
+PUT http://localhost:8082/modules/be50d503-9ba7-4733-af5c-5e47bbe482de/lessons/0cb0b06c-2492-4a0c-a06a-16aadcc5c163
+Content-Type: application/json
+
+{
+    "videoUrl": "https://www.youtube.com/watch?v=LW-N44fZ1wkytutu"
+}

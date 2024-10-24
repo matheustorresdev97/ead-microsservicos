@@ -49,7 +49,7 @@ public class ModuleModel implements Serializable {
     private CourseModel courseModel;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @OneToMany(mappedBy = "module", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "moduleModel", fetch = FetchType.LAZY)
     @Fetch(FetchMode.SUBSELECT)
     private Set<LessonModel> lessonModel;
 }
